@@ -1,9 +1,10 @@
 package com.springsecurity3withthymeleaf.configuration.config;
 
 
-import com.springsecurity3withthymeleaf.configuration.sec_handler.CustomAuthenticationSuccessHandler;
-import com.springsecurity3withthymeleaf.configuration.sec_handler.CustomLogoutSuccessHandler;
-import com.springsecurity3withthymeleaf.configuration.session_log.service.impl.UserDetailsServiceImpl;
+import com.springsecurity3withthymeleaf.configuration.custom_handlers.CustomAuthenticationFailureHandler;
+import com.springsecurity3withthymeleaf.configuration.custom_handlers.CustomAuthenticationSuccessHandler;
+import com.springsecurity3withthymeleaf.configuration.custom_handlers.CustomLogoutSuccessHandler;
+import com.springsecurity3withthymeleaf.configuration.user_session_log.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,6 +17,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
@@ -35,7 +37,7 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-
+// login relate bean - start
   @Bean
   public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
     return new CustomAuthenticationSuccessHandler();
@@ -46,6 +48,12 @@ public class SecurityConfig {
     return new CustomLogoutSuccessHandler();
   }
 
+
+  @Bean
+  public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+    return new CustomAuthenticationFailureHandler();
+  }
+//  login related bean - end
 
   @Bean
   public UserDetailsServiceImpl userDetailsService() {
@@ -76,6 +84,7 @@ public class SecurityConfig {
                            .loginPage("/login")
                            .loginProcessingUrl("/login")
                            .failureUrl("/login?error")
+                           .failureHandler(customAuthenticationFailureHandler())
                            .successHandler(customAuthenticationSuccessHandler())
                            .permitAll()
                   )

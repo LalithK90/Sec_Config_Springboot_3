@@ -4,7 +4,6 @@ package com.springsecurity3withthymeleaf.asset.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.springsecurity3withthymeleaf.asset.role.entity.Role;
 import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
-import com.springsecurity3withthymeleaf.configuration.session_log.entity.UserSessionLog;
 import com.springsecurity3withthymeleaf.util.audit.AuditEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -25,8 +24,6 @@ import java.util.List;
 @JsonIgnoreProperties(value = "createdDate", allowGetters = true)
 public class User extends AuditEntity {
 
-
-
     @Column(nullable = false,unique = true)
     @Size(min = 5, message = "user name should include at least five characters")
     private String username;
@@ -37,9 +34,6 @@ public class User extends AuditEntity {
 
     @Column(nullable = false)
     private boolean enabled;
-
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List< UserSessionLog > userSessionLogs;
 
     @OneToOne
     private UserDetails userDetails;

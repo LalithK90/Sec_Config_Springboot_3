@@ -1,4 +1,4 @@
-package com.springsecurity3withthymeleaf.configuration.session_log.entity;
+package com.springsecurity3withthymeleaf.configuration.user_session_log.entity;
 
 
 import jakarta.persistence.Entity;
@@ -23,20 +23,22 @@ public class UserSessionLog {
     private Integer id;
 
     private String username;
-    private String sessionId;
+
     private String browser;
+
     private String operatingSystem;
+
     private String device;
+
     private String ipAddress;
-    private LocalDateTime loginTime;
-    private LocalDateTime logoutTime;
-    private String userAgent;
+
     private String language;
-    private String referrer;
+
     private String requestMethod;
-    private String requestURI;
-    private String queryString;
-    private String cookies;
+
+    private LocalDateTime loginTime;
+
+    private LocalDateTime logoutTime;
 
 
 

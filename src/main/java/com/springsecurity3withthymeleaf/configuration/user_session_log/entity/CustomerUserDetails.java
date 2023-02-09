@@ -1,4 +1,4 @@
-package com.springsecurity3withthymeleaf.configuration.session_log.entity;
+package com.springsecurity3withthymeleaf.configuration.user_session_log.entity;
 
 
 import com.springsecurity3withthymeleaf.asset.user.entity.User;

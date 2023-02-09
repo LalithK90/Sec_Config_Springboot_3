@@ -1,9 +1,9 @@
-package com.springsecurity3withthymeleaf.configuration.session_log.service.impl;
+package com.springsecurity3withthymeleaf.configuration.user_session_log.service.impl;
 
 
 import com.springsecurity3withthymeleaf.asset.user.dao.UserDao;
 import com.springsecurity3withthymeleaf.asset.user.entity.User;
-import com.springsecurity3withthymeleaf.configuration.session_log.entity.CustomerUserDetails;
+import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.CustomerUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
