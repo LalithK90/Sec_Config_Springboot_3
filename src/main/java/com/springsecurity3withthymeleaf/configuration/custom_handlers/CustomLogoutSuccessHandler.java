@@ -24,13 +24,16 @@ public class CustomLogoutSuccessHandler extends
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                               Authentication authentication) throws IOException {
-    UserSessionLog userSessionLog = userSessionLogService.findByUserNameAndBrowser(authentication.getName(),extractBrowser(request.getHeader("User-Agent")));
-       userSessionLog.setLogoutTime(LocalDateTime.now());
+    UserSessionLog userSessionLog = userSessionLogService.findByUserNameAndBrowser(authentication.getName(),
+                                                                                   extractBrowser(request.getHeader(
+                                                                                       "User-Agent")));
+    userSessionLog.setLogoutTime(LocalDateTime.now());
     userSessionLogService.persist(userSessionLog);
 
     response.setStatus(HttpServletResponse.SC_OK);
     response.sendRedirect("/");
   }
+
   private String extractBrowser(String userAgent) {
     // Code to extract browser information from user agent string
     if ( userAgent.contains("Firefox") ) {

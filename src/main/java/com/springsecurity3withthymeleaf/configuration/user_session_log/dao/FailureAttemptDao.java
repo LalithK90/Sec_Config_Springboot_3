@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FailureAttemptDao extends JpaRepository< FailureAttempt, Integer> {
-void deleteByUsername(String username);
+public interface FailureAttemptDao extends JpaRepository< FailureAttempt, Integer > {
 
-  List< FailureAttempt> findByUsername(String username);
+  List< FailureAttempt > findByUsername(String username);
 }

@@ -2,6 +2,7 @@ package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
 
 import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.UserSessionLog;
+import com.springsecurity3withthymeleaf.configuration.user_session_log.service.FailureAttemptService;
 import com.springsecurity3withthymeleaf.configuration.user_session_log.service.UserSessionLogService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
   private UserSessionLogService userSessionLogService;
 @Autowired
 private HandlerCommonService handlerCommonService;
+@Autowired
+private FailureAttemptService failureAttemptService;
 
 
   @Override
@@ -46,6 +49,8 @@ private HandlerCommonService handlerCommonService;
 
 
     clearAuthenticationAttributes(request);
+//    after successfully login all failure attempts are removed
+    failureAttemptService.deleteByUsername(authentication.getName());
     logger.info("successfully login");
     response.sendRedirect("/mainWindow");
   }
