@@ -189,7 +189,7 @@ public class ConformationTokenController {
       model.addAttribute("formHeaderMessage", "Hey :/) This is the time to enter the new world");
     } else {
       model.addAttribute("formHeader", "Here is able to rest your password");
-      model.addAttribute("formHeaderMessage", "Ha Ha !! Time is ok to change your old password (-);");
+      model.addAttribute("formHeaderMessage", "Ha Ha !! Time is ok to change your old password. \n Because you may forgotten your password or your tried more than five (5) to come to home with wrong credential combination (-);");
     }
   }
 }
