@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head  data-th-replace="~{fragments/header :: headerFragment}">
+  <meta charset="UTF-8">
+  <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav  data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<main>
+  <div class="col-12 col-sm-12 col-md-12 mt-4">
+<div class='_404'>404</div>
+<hr>
+<div class='_1'>THE PAGE</div>
+<div class='_2'>WAS NOT FOUND</div>
+<a class='btn' href="/home">BACK TO HOME</a>
+  </div>
+</main>
+<!--footer include-->
+<div  data-th-replace="~{fragments/footer :: footerFragment}"></div>
+<!--script include-->
+<div  data-th-replace="~{fragments/script :: scriptFragment}"></div>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+user registration.
+create user details
+create role
+create user
+password change
+password forgotten
+
+
+push to git
