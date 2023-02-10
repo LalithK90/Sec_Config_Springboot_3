@@ -9,21 +9,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ConformationTokenService {
-    private final ConformationTokenDao conformationTokenDao;
+  private final ConformationTokenDao conformationTokenDao;
 
-    public ConformationToken createToken(ConformationToken conformationToken) {
-        return conformationTokenDao.save(conformationToken);
-    }
+  public ConformationToken createToken(ConformationToken conformationToken) {
+    return conformationTokenDao.save(conformationToken);
+  }
 
-    public ConformationToken findByToken(String token) {
+  public ConformationToken findByToken(String token) {
     return conformationTokenDao.findByToken(token);
-    }
+  }
 
-    public ConformationToken findByEmail(String email) {
-        return conformationTokenDao.findByEmail(email);
-    }
+  public ConformationToken findByEmail(String email) {
+    return conformationTokenDao.findByEmail(email);
+  }
 
-    public void deleteByConformationToken(ConformationToken conformationToken) {
-        conformationTokenDao.delete(conformationToken);
-    }
+  public void deleteByConformationToken(ConformationToken conformationToken) {
+    conformationTokenDao.delete(conformationToken);
+  }
 }

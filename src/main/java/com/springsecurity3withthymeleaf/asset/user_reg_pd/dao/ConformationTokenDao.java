@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ConformationTokenDao extends JpaRepository< ConformationToken, Integer> {
-    ConformationToken findByToken(String token);
+public interface ConformationTokenDao extends JpaRepository< ConformationToken, Integer > {
+  ConformationToken findByToken(String token);
 
-    ConformationToken findByEmail(String email);
+  ConformationToken findByEmail(String email);
 }

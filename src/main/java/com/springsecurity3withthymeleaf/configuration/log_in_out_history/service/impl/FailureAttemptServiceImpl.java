@@ -1,9 +1,9 @@
-package com.springsecurity3withthymeleaf.configuration.user_session_log.service.impl;
+package com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.impl;
 
 
-import com.springsecurity3withthymeleaf.configuration.user_session_log.dao.FailureAttemptDao;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.FailureAttempt;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.service.FailureAttemptService;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.dao.FailureAttemptDao;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.FailureAttempt;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.FailureAttemptService;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 

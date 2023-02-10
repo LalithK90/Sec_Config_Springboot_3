@@ -1,7 +1,7 @@
 package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
-import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.FailureAttempt;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.service.FailureAttemptService;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.FailureAttempt;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.FailureAttemptService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

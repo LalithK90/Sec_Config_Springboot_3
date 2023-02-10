@@ -1,9 +1,9 @@
 package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
 
-import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.UserSessionLog;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.service.FailureAttemptService;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.service.UserSessionLogService;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.LogInOutHistory;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.FailureAttemptService;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.LogInOutHistoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -22,37 +22,45 @@ import java.time.LocalDateTime;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
   protected final Log logger = LogFactory.getLog(this.getClass());
   @Autowired
-  private UserSessionLogService userSessionLogService;
-@Autowired
-private HandlerCommonService handlerCommonService;
-@Autowired
-private FailureAttemptService failureAttemptService;
+  private LogInOutHistoryService logInOutHistoryService;
+  @Autowired
+  private HandlerCommonService handlerCommonService;
+  @Autowired
+  private FailureAttemptService failureAttemptService;
 
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                       Authentication authentication) throws IOException {
-    UserSessionLog userSessionLog = new UserSessionLog();
-
+    LogInOutHistory logInOutHistory = new LogInOutHistory();
     // Extract information from the HttpServletRequest object
-    userSessionLog.setUsername(authentication.getName());
-    userSessionLog.setIpAddress(request.getRemoteAddr());
-    userSessionLog.setLanguage(request.getHeader("Accept-Language"));
-    userSessionLog.setRequestMethod(request.getMethod());
-    userSessionLog.setLoginTime(LocalDateTime.now());
-    userSessionLog.setLogoutTime(null);
-    userSessionLog.setBrowser(handlerCommonService.extractBrowser(request.getHeader("User-Agent")));
-    userSessionLog.setOperatingSystem(handlerCommonService.extractOperatingSystem(request.getHeader("User-Agent")));
-    userSessionLog.setDevice(handlerCommonService.extractDevice(request.getHeader("User-Agent")));
+    logInOutHistory.setUsername(authentication.getName());
+    logInOutHistory.setIpAddress(request.getRemoteAddr());
+    logInOutHistory.setLanguage(request.getHeader("Accept-Language"));
+    logInOutHistory.setRequestMethod(request.getMethod());
+    logInOutHistory.setLoginTime(LocalDateTime.now());
+    logInOutHistory.setLogoutTime(null);
+    logInOutHistory.setBrowser(handlerCommonService.extractBrowser(request.getHeader("User-Agent")));
+    logInOutHistory.setOperatingSystem(handlerCommonService.extractOperatingSystem(request.getHeader("User-Agent")));
+    logInOutHistory.setDevice(handlerCommonService.extractDevice(request.getHeader("User-Agent")));
 
-    userSessionLogService.persist(userSessionLog);
+    logInOutHistoryService.persist(logInOutHistory);
 
 
     clearAuthenticationAttributes(request);
 //    after successfully login all failure attempts are removed
     failureAttemptService.deleteByUsername(authentication.getName());
     logger.info("successfully login");
-    response.sendRedirect("/mainWindow");
+    HttpSession session = request.getSession();
+    String previousPage = (String) session.getAttribute("previousPage");
+    System.out.println(previousPage + " in csah");
+    if ( previousPage != null && ! previousPage.equals("/login") ) {
+      session.removeAttribute("previousPage");
+      System.out.println("insside " + previousPage);
+      response.sendRedirect( previousPage);
+    } else {
+      response.sendRedirect("/mainWindow");
+    }
   }
 
   /**

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class LogAspect {
+public class SampleOfAspect {
   protected final Log logger = LogFactory.getLog(this.getClass());
 
   @Before("execution(public * com.springsecurity3withthymeleaf.*Service.*(..))")

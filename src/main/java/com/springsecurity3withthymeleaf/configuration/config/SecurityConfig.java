@@ -4,7 +4,7 @@ package com.springsecurity3withthymeleaf.configuration.config;
 import com.springsecurity3withthymeleaf.configuration.custom_handlers.CustomAuthenticationFailureHandler;
 import com.springsecurity3withthymeleaf.configuration.custom_handlers.CustomAuthenticationSuccessHandler;
 import com.springsecurity3withthymeleaf.configuration.custom_handlers.CustomLogoutSuccessHandler;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.service.impl.UserDetailsServiceImpl;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -29,7 +29,7 @@ import org.springframework.session.web.http.HttpSessionIdResolver;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  private final String[] ALL_PERMIT_URL = {"/","/docs/**", "/resources/**", "/static/**", "/webjars/**",
+  private final String[] ALL_PERMIT_URL = {"/", "/docs/**", "/resources/**", "/static/**", "/webjars/**",
       "/login", "/select/**", "/index", "/register/**", "/forgottenPassword",};
 
   @Bean
@@ -37,7 +37,7 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-// login relate bean - start
+  // login relate bean - start
   @Bean
   public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
     return new CustomAuthenticationSuccessHandler();
@@ -77,7 +77,8 @@ public class SecurityConfig {
                                        .requestMatchers(ALL_PERMIT_URL).permitAll()
                                        .requestMatchers("/sample/**").hasRole("USER")
                                        .requestMatchers("/sample_two/**").hasAnyRole("USER", "ADMIN")
-                                       .anyRequest().authenticated()
+                                       .anyRequest()
+                                       .authenticated()
                               )
         .formLogin((form) ->
                        form
@@ -90,28 +91,27 @@ public class SecurityConfig {
                   )
         .logout((logout) ->
                     logout
-                        .logoutSuccessHandler(customLogoutSuccessHandler())
                         .deleteCookies("JSESSIONID")
+                        .logoutSuccessHandler(customLogoutSuccessHandler())
                         .invalidateHttpSession(true)
-                        .clearAuthentication(true)
                         .permitAll()
                )
         //remember me
-   /*     .rememberMe((remember) ->
-                        remember
-                            .userDetailsService(userDetailsService())
-                            .key("uniqueAndSecret")
-                            .useSecureCookie(true)
-                            .tokenValiditySeconds(43200) // token is valid 12 hours
+             .rememberMe((remember) ->
+                             remember
+                                 .userDetailsService(userDetailsService())
+                                 .key("uniqueAndSecret")
+                                 .useSecureCookie(true)
+                                 .tokenValiditySeconds(43200) // token is valid 12 hours
 
-                   )*/
+                        )
 //session management
         .sessionManagement(
             (sessionManagement) ->
                 sessionManagement
                     .sessionFixation()
                     .migrateSession()
-                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .sessionConcurrency((sessionConcurrency) ->
                                             sessionConcurrency
                                                 .maximumSessions(1)

@@ -1,7 +1,7 @@
-package com.springsecurity3withthymeleaf.configuration.user_session_log.dao;
+package com.springsecurity3withthymeleaf.configuration.log_in_out_history.dao;
 
 
-import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.FailureAttempt;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.FailureAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -54,7 +54,7 @@ public class ApplicationCreateRestController {
     //admin user one
     User user = new User();
     user.setUserDetails(userDetailsDb);
-    user.setUsername("admin");
+    user.setUsername("admin@gmail.com");
     user.setPassword("admin");
     String message = "Username:- " + user.getUsername() + "\n Password:- " + user.getPassword();
     user.setEnabled(true);

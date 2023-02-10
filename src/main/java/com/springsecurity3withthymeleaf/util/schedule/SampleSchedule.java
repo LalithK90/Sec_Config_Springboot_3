@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
-public class VesselOrderSchedule {
+public class SampleSchedule {
  /* private final VesselOrderService vesselOrderService;
   private final ChandlerLicenseService chandlerLicenseService;
   private final PaymentService paymentService;

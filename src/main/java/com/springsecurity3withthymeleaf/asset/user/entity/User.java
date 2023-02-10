@@ -6,6 +6,7 @@ import com.springsecurity3withthymeleaf.asset.role.entity.Role;
 import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
 import com.springsecurity3withthymeleaf.util.audit.AuditEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,11 +26,11 @@ import java.util.List;
 public class User extends AuditEntity {
 
     @Column(nullable = false,unique = true)
-    @Size(min = 5, message = "user name should include at least five characters")
+    @Email(message="Please provide valid email for this process.")
     private String username;
 
     @Column(nullable = false)
-    @Size(min = 4, message = "password should include four characters or symbols")
+    @Size(min = 4, message = "Password should include four characters or symbols")
     private String password;
 
     @Column(nullable = false)

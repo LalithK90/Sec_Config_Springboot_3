@@ -1,8 +1,8 @@
 package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
 
-import com.springsecurity3withthymeleaf.configuration.user_session_log.entity.UserSessionLog;
-import com.springsecurity3withthymeleaf.configuration.user_session_log.service.UserSessionLogService;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.LogInOutHistory;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.LogInOutHistoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +18,17 @@ import java.time.LocalDateTime;
 public class CustomLogoutSuccessHandler extends
                                         SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
   @Autowired
-  private UserSessionLogService userSessionLogService;
+  private LogInOutHistoryService logInOutHistoryService;
 
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                               Authentication authentication) throws IOException {
-    UserSessionLog userSessionLog = userSessionLogService.findByUserNameAndBrowser(authentication.getName(),
-                                                                                   extractBrowser(request.getHeader(
-                                                                                       "User-Agent")));
-    userSessionLog.setLogoutTime(LocalDateTime.now());
-    userSessionLogService.persist(userSessionLog);
+    LogInOutHistory logInOutHistory = logInOutHistoryService.findByUserNameAndBrowser(authentication.getName(),
+                                                                                      extractBrowser(request.getHeader(
+                                                                                          "User-Agent")));
+    logInOutHistory.setLogoutTime(LocalDateTime.now());
+    logInOutHistoryService.persist(logInOutHistory);
 
     response.setStatus(HttpServletResponse.SC_OK);
     response.sendRedirect("/");
