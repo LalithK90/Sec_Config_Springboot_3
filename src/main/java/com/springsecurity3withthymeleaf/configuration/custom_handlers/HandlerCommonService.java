@@ -20,7 +20,7 @@ public class HandlerCommonService {
     return failureAttempt;
   }
 
-  public LogInOutHistory logInOutHistory(HttpServletRequest request, String username) {
+  public LogInOutHistory logInOutHistory(HttpServletRequest request) {
     LogInOutHistory logInOutHistory = new LogInOutHistory();
     logInOutHistory.commonDataFromHTTPRequest(request);
 

@@ -2,16 +2,14 @@ package com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class CommonDataFromHTTPRequest {
+@ToString
+public class CommonDataFromHTTPRequest {
 
   private String username;
 
