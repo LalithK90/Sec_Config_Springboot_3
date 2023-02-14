@@ -1,12 +1,7 @@
 package com.springsecurity3withthymeleaf.util.aspect;
 
-import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.CommonDataFromHTTPRequest;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -40,24 +35,24 @@ public class SampleOfAspect {
 
   }
 */
-
-  @Before( value = "execution( * com.springsecurity3withthymeleaf.configuration.custom_handlers" +
-      ".CustomAuthenticationSuccessHandler.onAuthenticationSuccess(..))" )
-  public void login(JoinPoint joinPoint) {
-
-
-  }
-
-  @AfterReturning( value = "execution( * com.springsecurity3withthymeleaf.configuration.custom_handlers" +
-      ".CustomAuthenticationSuccessHandler.onAuthenticationSuccess(..))" )
-  public void loginafter(JoinPoint joinPoint) {
-    CommonDataFromHTTPRequest commonDataFromHTTPRequest = new CommonDataFromHTTPRequest();
-    commonDataFromHTTPRequest.commonDataFromHTTPRequest((HttpServletRequest) joinPoint.getArgs()[0]);
-
-    System.out.println(commonDataFromHTTPRequest);
-
-
-  }
+//
+//  @Before( value = "execution( * com.springsecurity3withthymeleaf.configuration.custom_handlers" +
+//      ".CustomAuthenticationSuccessHandler.onAuthenticationSuccess(..))" )
+//  public void login(JoinPoint joinPoint) {
+//
+//
+//  }
+//
+//  @AfterReturning( value = "execution( * com.springsecurity3withthymeleaf.configuration.custom_handlers" +
+//      ".CustomAuthenticationSuccessHandler.onAuthenticationSuccess(..))" )
+//  public void loginafter(JoinPoint joinPoint) {
+//    CommonDataFromHTTPRequest commonDataFromHTTPRequest = new CommonDataFromHTTPRequest();
+//    commonDataFromHTTPRequest.commonDataFromHTTPRequest((HttpServletRequest) joinPoint.getArgs()[0]);
+//
+//    System.out.println(commonDataFromHTTPRequest);
+//
+//
+//  }
 
 }
 

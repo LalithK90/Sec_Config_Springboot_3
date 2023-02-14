@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class MainAppController {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
   private final UserDetailsFilesService userDetailsFilesService;

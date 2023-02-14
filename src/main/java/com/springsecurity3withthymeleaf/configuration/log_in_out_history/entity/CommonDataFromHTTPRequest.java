@@ -1,15 +1,17 @@
 package com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity;
 
+import jakarta.persistence.MappedSuperclass;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class CommonDataFromHTTPRequest {
+@MappedSuperclass
+public abstract class CommonDataFromHTTPRequest {
 
   private String username;
 
@@ -35,7 +37,7 @@ public class CommonDataFromHTTPRequest {
 
   private String requestURI;
 
-  public void commonDataFromHTTPRequest(HttpServletRequest request) {
+  public CommonDataFromHTTPRequest(HttpServletRequest request) {
     setUsername(request.getParameter("username"));
     setBrowser(extractBrowser(request.getHeader("User-Agent")));
     setOperatingSystem(extractOperatingSystem(request.getHeader("User-Agent")));
@@ -49,6 +51,20 @@ public class CommonDataFromHTTPRequest {
     setReferrer(request.getHeader("Referer"));
     setRequestURI(request.getRequestURI());
   }
+
+
+//    setUsername(request.getParameter("username"));
+//    setBrowser(extractBrowser(request.getHeader("User-Agent")));
+//    setOperatingSystem(extractOperatingSystem(request.getHeader("User-Agent")));
+//    setDevice(extractDevice(request.getHeader("User-Agent")));
+//    setIpAddress(request.getRemoteAddr());
+//    setLanguage(request.getHeader("Accept-Language"));
+//    setRequestMethod(request.getMethod());
+//    setSessionId(request.getSession().getId());
+//    setCookies(extractCookies(request.getCookies()));
+//    setQueryString(request.getQueryString());
+//    setReferrer(request.getHeader("Referer"));
+//    setRequestURI(request.getRequestURI());
 
   private String extractDevice(String userAgent) {
     if ( userAgent.contains("Mobile") ) {
@@ -119,4 +135,5 @@ public class CommonDataFromHTTPRequest {
     }
     return "Unknown Operating System";
   }
+
 }
