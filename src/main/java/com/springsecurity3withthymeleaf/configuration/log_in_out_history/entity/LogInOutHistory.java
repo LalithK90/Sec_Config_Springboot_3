@@ -17,24 +17,11 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogInOutHistory {
+public class LogInOutHistory extends CommonDataFromHTTPRequest {
   @Id
   @GeneratedValue( strategy = GenerationType.IDENTITY )
   private Integer id;
 
-  private String username;
-
-  private String browser;
-
-  private String operatingSystem;
-
-  private String device;
-
-  private String ipAddress;
-
-  private String language;
-
-  private String requestMethod;
 
   private LocalDateTime loginTime;
 

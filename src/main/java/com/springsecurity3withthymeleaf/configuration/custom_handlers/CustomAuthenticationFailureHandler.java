@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -30,17 +29,8 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
       //    user redirect to password reset page
       response.sendRedirect("/forgottenPassword");
     } else {//    if not save new failure attempt
-      FailureAttempt userSessionLog = new FailureAttempt();
-      userSessionLog.setUsername(request.getParameter("username"));
-      userSessionLog.setIpAddress(request.getRemoteAddr());
-      userSessionLog.setLanguage(request.getHeader("Accept-Language"));
-      userSessionLog.setRequestMethod(request.getMethod());
-      userSessionLog.setTriedDateTime(LocalDateTime.now());
-      userSessionLog.setBrowser(handlerCommonService.extractBrowser(request.getHeader("User-Agent")));
-      userSessionLog.setOperatingSystem(handlerCommonService.extractOperatingSystem(request.getHeader("User-Agent")));
-      userSessionLog.setDevice(handlerCommonService.extractDevice(request.getHeader("User-Agent")));
 
-      failureAttemptService.persist(userSessionLog);
+      failureAttemptService.persist(handlerCommonService.failureAttempt(request));
       // Log the authentication failure
 
       response.sendRedirect("/login?error=true");
