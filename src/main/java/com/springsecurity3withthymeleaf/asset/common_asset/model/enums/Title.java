@@ -14,7 +14,8 @@ public enum Title {
     DR("Dr. "),
     DRMRS("Dr(Mrs). "),
     PRO("Prof. "),
-    SISTER("Sister. ");
+    SISTER("Sister. "),
+    PASTOR("Pastor. ");
 
     private final String title;
 }
