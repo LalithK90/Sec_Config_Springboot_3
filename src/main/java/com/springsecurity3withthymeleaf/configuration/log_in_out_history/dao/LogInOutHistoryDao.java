@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LogInOutHistoryDao extends JpaRepository< LogInOutHistory, Integer > {
-  @Query( value = "select * from user_session_log where username = ?1 and browser = ?2 order by id desc limit 1",
+  @Query( value = "select * from log_in_out_history where username = ?1 and browser = ?2 order by id desc limit 1",
       nativeQuery = true )
   LogInOutHistory findByUsernameAndBrowserLastRecord(@Param( "user_name" ) String username,
                                                      @Param( "browser_name" ) String browser);

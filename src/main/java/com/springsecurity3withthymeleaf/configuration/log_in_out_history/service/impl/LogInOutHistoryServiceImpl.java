@@ -38,7 +38,9 @@ public class LogInOutHistoryServiceImpl implements LogInOutHistoryService {
 
   @Cacheable
   public LogInOutHistory findByUserNameAndBrowser(String name, String browserName) {
-    return logInOutHistoryDao.findByUsernameAndBrowserLastRecord(name, browserName);
+    LogInOutHistory logInOutHistory1 = logInOutHistoryDao.findByUsernameAndBrowserLastRecord(name, browserName);
+    System.out.println(logInOutHistory1 +" in service class");
+    return logInOutHistory1;
   }
 
 

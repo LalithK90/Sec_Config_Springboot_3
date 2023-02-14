@@ -19,15 +19,14 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
   @Autowired
   private LogInOutHistoryService logInOutHistoryService;
-  @Autowired
-  private HandlerCommonService handlerCommonService;
+
   @Autowired
   private FailureAttemptService failureAttemptService;
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                       Authentication authentication) throws IOException {
-    LogInOutHistory logInOutHistory = handlerCommonService.logInOutHistory(request);
+    LogInOutHistory logInOutHistory = new LogInOutHistory(request);
     logInOutHistoryService.persist(logInOutHistory);
 
     System.out.println(logInOutHistory);

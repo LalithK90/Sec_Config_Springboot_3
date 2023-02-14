@@ -16,8 +16,6 @@ import java.util.List;
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
   @Autowired
-  private HandlerCommonService handlerCommonService;
-  @Autowired
   private FailureAttemptService failureAttemptService;
 
   @Override
@@ -30,7 +28,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
       response.sendRedirect("/forgottenPassword");
     } else {//    if not save new failure attempt
 
-      failureAttemptService.persist(handlerCommonService.failureAttempt(request));
+      failureAttemptService.persist(new FailureAttempt(request));
       // Log the authentication failure
 
       response.sendRedirect("/login?error=true");

@@ -3,6 +3,7 @@ package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.LogInOutHistory;
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.LogInOutHistoryService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,21 @@ public class CustomLogoutSuccessHandler extends
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                               Authentication authentication) throws IOException {
+
     LogInOutHistory logInOutHistory = logInOutHistoryService.findByUserNameAndBrowser(authentication.getName(),
                                                                                       extractBrowser(request.getHeader(
                                                                                           "User-Agent")));
+
+    System.out.println("Befoer  "+logInOutHistory);
+
     logInOutHistory.setLogoutTime(LocalDateTime.now());
-    logInOutHistoryService.persist(logInOutHistory);
+    logInOutHistory = logInOutHistoryService.persist(logInOutHistory);
+
+    System.out.println(" after "+ logInOutHistory);
+
+    String c =
+        extractCookies(request.getCookies());
+    System.out.println("kooko "+ c);
 
     response.setStatus(HttpServletResponse.SC_OK);
     response.sendRedirect("/");
@@ -50,5 +61,19 @@ public class CustomLogoutSuccessHandler extends
       return "Internet Explorer";
     }
     return "Unknown Browser";
+  }
+
+  private String extractCookies(Cookie[] cookies) {
+    if ( cookies == null ) {
+      return "";
+    }
+    StringBuilder cookieString = new StringBuilder();
+    for ( Cookie cookie : cookies ) {
+      cookieString.append(cookie.getName());
+      cookieString.append("=");
+      cookieString.append(cookie.getValue());
+      cookieString.append(";");
+    }
+    return cookieString.toString();
   }
 }

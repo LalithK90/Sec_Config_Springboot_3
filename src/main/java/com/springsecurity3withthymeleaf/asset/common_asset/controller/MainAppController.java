@@ -25,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -42,7 +43,7 @@ public class MainAppController {
   private final CommonService commonService;
   private final ResourceLoader resourceLoader;
 
-  @GetMapping
+  @GetMapping("/favicon.ico")
   public String favicon() {
     return "/img/favicon.ico";
   }
@@ -114,6 +115,7 @@ public class MainAppController {
   }
 
   @GetMapping( "/select/user" )
+  @ResponseBody
   public String saveUser() {
     //roles list start
     String[] roles = {"ADMIN", "SAMPLE", "SAMPLE1", "SAMPLE2"};
