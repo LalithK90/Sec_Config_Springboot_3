@@ -1,7 +1,7 @@
-package com.springsecurity3withthymeleaf.asset.user_reg_pd.entity;
+package com.springsecurity3withthymeleaf.asset.user_reg_pd_change.entity;
 
 
-import com.springsecurity3withthymeleaf.asset.user_reg_pd.entity.enums.TokenStatus;
+import com.springsecurity3withthymeleaf.asset.user_reg_pd_change.entity.enums.TokenStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ConformationToken {
+public class UserRegAndPwChangeForPw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,7 +30,7 @@ public class ConformationToken {
 
     private LocalDateTime endDate;
 
-    public ConformationToken(String email,TokenStatus tokenStatus) {
+    public UserRegAndPwChangeForPw(String email, TokenStatus tokenStatus) {
         this.email = email;
         this.token = UUID.randomUUID().toString();
         this.createDate = LocalDateTime.now();
