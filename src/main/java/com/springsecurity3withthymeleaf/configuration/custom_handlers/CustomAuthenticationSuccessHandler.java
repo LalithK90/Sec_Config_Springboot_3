@@ -1,7 +1,6 @@
 package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
 
-import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.LogInOutHistory;
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.FailureAttemptService;
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.LogInOutHistoryService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,13 +25,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                       Authentication authentication) throws IOException {
-    LogInOutHistory logInOutHistory = new LogInOutHistory(request);
-    logInOutHistoryService.persist(logInOutHistory);
 
-    System.out.println(logInOutHistory);
-
-//    after successfully login all failure attempts are removed
-    failureAttemptService.deleteByUsername(logInOutHistory.getUsername());
 
 
     clearAuthenticationAttributes(request);
