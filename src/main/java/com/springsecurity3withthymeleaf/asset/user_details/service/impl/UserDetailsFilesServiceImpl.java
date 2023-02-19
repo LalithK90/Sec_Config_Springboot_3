@@ -42,7 +42,7 @@ public class UserDetailsFilesServiceImpl implements UserDetailsFilesService {
     }
 
     public UserDetailsFiles findById(Integer id) {
-        return userDetailsFilesDao.getById(id);
+        return userDetailsFilesDao.getReferenceById(id);
     }
 
     public UserDetailsFiles findByNewID(String filename) {

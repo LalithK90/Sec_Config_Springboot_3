@@ -1,64 +1,46 @@
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
-        xmlns='http://www.ehcache.org/v3'
-        xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.0.xsd
-							http://www.ehcache.org/v3/jsr107 https://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNameSpaceSchemaLocation="ehcache.xsd"
+         updateCheck="true"
+         monitoring="autodetect"
+         dynamicConfig="true">
 
+    <diskStore path="java.io.tmpdir"/>
     <!--1. userDetails-->
-    <cache alias="userDetails">
-        <expiry>
-            <ttl unit="seconds">60000</ttl>
-        </expiry>
-        <heap unit="entries">4000</heap>
-        <jsr107:mbeans enable-statistics="true"/>
+    <cache name="userDetails"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap"/>
     </cache>
     <!--2. user-->
-    <cache alias="user">
-        <expiry>
-            <ttl unit="seconds">6000</ttl>
-        </expiry>
-        <heap unit="entries">400</heap>
-        <jsr107:mbeans enable-statistics="true"/>
+    <cache name="user"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap"/>
     </cache>
     <!--3. role-->
-    <cache alias="role">
-        <expiry>
-            <ttl unit="seconds">6000</ttl>
-        </expiry>
-        <heap unit="entries">400</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--4. patient-->
-    <cache alias="patient">
-        <expiry>
-            <ttl unit="seconds">60000</ttl>
-        </expiry>
-        <heap unit="entries">20000</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--5. district-->
-    <cache alias="district">
-        <expiry>
-            <ttl unit="seconds">60000</ttl>
-        </expiry>
-        <heap unit="entries">25</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--6. policeDivision-->
-    <cache alias="policeDivision">
-        <expiry>
-            <ttl unit="seconds">60000</ttl>
-        </expiry>
-        <heap unit="entries">60</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--7. gramaniladhari-->
-    <cache alias="gramaNiladhari">
-        <expiry>
-            <ttl unit="seconds">60000</ttl>
-        </expiry>
-        <heap unit="entries">14022</heap>
-        <jsr107:mbeans enable-statistics="true"/>
+    <cache name="role"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap"/>
     </cache>
 
-</config>
+
+</ehcache>

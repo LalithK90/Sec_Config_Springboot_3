@@ -41,7 +41,7 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
 
   @Cacheable
   public UserDetails findById(Integer id) {
-    return userDetailsDao.getById(id);
+    return userDetailsDao.getReferenceById(id);
   }
 
   @Caching( evict = {@CacheEvict( value = "userDetails", allEntries = true )},
@@ -79,7 +79,7 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
 
   @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
-    UserDetails userDetails = userDetailsDao.getById(id);
+    UserDetails userDetails = userDetailsDao.getReferenceById(id);
     userDetails.setStopActive(StopActive.STOP);
     userDetailsDao.save(userDetails);
     return false;
