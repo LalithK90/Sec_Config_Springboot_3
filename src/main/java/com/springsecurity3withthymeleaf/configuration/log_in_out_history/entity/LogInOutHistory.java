@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class LogInOutHistory extends HTTPCommonData{
+public class LogInOutHistory extends HTTPForHTTPCommonData {
   @Id
   @GeneratedValue( strategy = GenerationType.IDENTITY )
   private Integer id;

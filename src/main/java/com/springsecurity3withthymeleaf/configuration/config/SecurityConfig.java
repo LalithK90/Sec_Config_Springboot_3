@@ -30,7 +30,7 @@ import org.springframework.session.web.http.HttpSessionIdResolver;
 public class SecurityConfig {
 
   private final String[] ALL_PERMIT_URL = {"/", "/docs/**", "/resources/**", "/static/**", "/webjars/**",
-      "/login", "/select/**", "/index", "/register/**", "/forgottenPassword",};
+      "/login", "/select/**", "/index", "/register/**", "/forgottenPassword"};
 
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {

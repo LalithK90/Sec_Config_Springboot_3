@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Cacheable
-    public List<User> findAll() {
+    public List< User > findAll() {
         return userDao.findAll();
     }
 

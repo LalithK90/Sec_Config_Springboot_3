@@ -52,7 +52,7 @@ public class UserDetails extends AuditEntity {
   @Column( unique = true )
   private String officeEmail;
 
-  @Column( columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NULL", length = 255 )
+  @Column( columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NULL")
   private String address;
 
   @Enumerated( EnumType.STRING )

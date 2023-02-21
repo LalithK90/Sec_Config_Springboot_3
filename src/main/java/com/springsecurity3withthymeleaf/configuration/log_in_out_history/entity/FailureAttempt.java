@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class FailureAttempt extends HTTPCommonData{
+public class FailureAttempt extends HTTPForHTTPCommonData {
   @Id
   @GeneratedValue( strategy = GenerationType.IDENTITY )
   private Integer id;

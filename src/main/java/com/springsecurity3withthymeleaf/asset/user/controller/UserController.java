@@ -15,7 +15,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
@@ -66,9 +65,8 @@ public class UserController {
     public String addUserEmployeeDetails(@ModelAttribute( "userDetails" ) UserDetails userDetails, Model model) {
 
         List< UserDetails > userDetailList = usersDetailsService.search(userDetails)
-                .stream()
-                .filter(userService::findByEmployee)
-                .collect(Collectors.toList());
+            .stream()
+            .filter(userService::findByEmployee).toList();
 
         if ( userDetailList.size() == 1 ) {
             model.addAttribute("user", new User());

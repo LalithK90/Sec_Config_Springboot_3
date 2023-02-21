@@ -2,6 +2,7 @@ package com.springsecurity3withthymeleaf.configuration.custom_handlers;
 
 
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.LogInOutHistory;
+import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.enums.Browser;
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.service.LogInOutHistoryService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,54 +17,40 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Component( "customLogoutSuccessHandler" )
-public class CustomLogoutSuccessHandler extends
-                                        SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
+public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
   @Autowired
   private LogInOutHistoryService logInOutHistoryService;
+
 
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                               Authentication authentication) throws IOException {
 
-    LogInOutHistory logInOutHistory = logInOutHistoryService.findByUserNameAndBrowser(authentication.getName(),
-                                                                                      extractBrowser(request.getHeader(
-                                                                                          "User-Agent")));
+    Browser bs = extractBrowser(request.getHeader(
+        "User-Agent"));
+    System.out.println(bs);
+    String b = bs.getBrowser();
+    System.out.println(b);
 
-    System.out.println("Befoer  "+logInOutHistory);
+    LogInOutHistory logInOutHistory = logInOutHistoryService.findByUserNameAndBrowser(authentication.getName(), String.valueOf(bs));
+
+    System.out.println("Before  " + logInOutHistory);
 
     logInOutHistory.setLogoutTime(LocalDateTime.now());
     logInOutHistory = logInOutHistoryService.persist(logInOutHistory);
 
-    System.out.println(" after "+ logInOutHistory);
+    System.out.println(" after " + logInOutHistory);
 
     String c =
         extractCookies(request.getCookies());
-    System.out.println("kooko "+ c);
+    System.out.println("kooko " + c);
 
     response.setStatus(HttpServletResponse.SC_OK);
     response.sendRedirect("/");
   }
 
-  private String extractBrowser(String userAgent) {
-    // Code to extract browser information from user agent string
-    if ( userAgent.contains("Firefox") ) {
-      return "Firefox";
-    } else if ( userAgent.contains("Edge") ) {
-      return "Microsoft Edge";
-    } else if ( userAgent.contains("Chrome") ) {
-      return "Chrome";
-    } else if ( userAgent.contains("Safari") ) {
-      return "Safari";
-    } else if ( userAgent.contains("Opera") ) {
-      return "Opera";
-    } else if ( userAgent.contains("MSIE") || userAgent.contains("Trident") ) {
-      return "Internet Explorer";
-    }
-    return "Unknown Browser";
-  }
-
-  private String extractCookies(Cookie[] cookies) {
+  public String extractCookies(Cookie[] cookies) {
     if ( cookies == null ) {
       return "";
     }
@@ -75,5 +62,23 @@ public class CustomLogoutSuccessHandler extends
       cookieString.append(";");
     }
     return cookieString.toString();
+  }
+
+  public Browser extractBrowser(String userAgent) {
+    System.out.println(userAgent);
+    if ( userAgent.contains(Browser.FIREFOX.getBrowser()) ) {
+      return Browser.FIREFOX;
+    } else if ( userAgent.contains(Browser.EDGE.getBrowser()) ) {
+      return Browser.EDGE;
+    } else if ( userAgent.contains(Browser.CHROME.getBrowser()) ) {
+      return Browser.CHROME;
+    } else if ( userAgent.contains(Browser.SAFARI.getBrowser()) ) {
+      return Browser.SAFARI;
+    } else if ( userAgent.contains(Browser.OPERA.getBrowser()) ) {
+      return Browser.OPERA;
+    } else if ( userAgent.contains(Browser.MSIE.getBrowser()) || userAgent.contains(Browser.TRIDENT.getBrowser()) ) {
+      return Browser.INTERNETEXPLORER;
+    }
+    return Browser.UNKNOWNBROWSER;
   }
 }
