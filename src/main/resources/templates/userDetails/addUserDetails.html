@@ -22,7 +22,7 @@
       </h4 >
     </div >
     <div class="col text-center" >
-      <a data-th-href="${'/userDetails'}" class="btn btn-primary" >
+      <a class="btn btn-primary" data-th-href="${'/userProfile'}" >
         View User Details
       </a >
     </div >
@@ -30,8 +30,8 @@
 </div >
 <!--Form Content - start -->
 <div class="container-fluid " >
-  <form data-th-action="${addStatus==true?'/userDetails/save':'/userDetails/update'}"
-        data-th-object="${userDetails}" enctype="multipart/form-data" method="POST" >
+  <form data-th-action="${addStatus==true?'/userProfile/save':'/userProfile/update'}"
+        data-th-object="${userProfile}" enctype="multipart/form-data" method="POST" >
     <input data-th-field="*{id}" readonly type="hidden" />
     <input data-th-field="*{stopActive}" readonly type="hidden" />
     <div class="row" >
@@ -250,7 +250,7 @@
       <!--Button-->
       <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
         <!--Back Button-->
-        <a class="btn btn-dark" href="/userDetails" >
+        <a class="btn btn-dark" href="/userProfile" >
           <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
         </a >
         <!--Save Button-->

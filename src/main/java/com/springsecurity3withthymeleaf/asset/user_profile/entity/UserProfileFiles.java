@@ -1,4 +1,4 @@
-package com.springsecurity3withthymeleaf.asset.user_details.entity;
+package com.springsecurity3withthymeleaf.asset.user_profile.entity;
 
 
 import com.springsecurity3withthymeleaf.util.audit.AuditEntity;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetailsFiles extends AuditEntity {
+public class UserProfileFiles extends AuditEntity {
 
     private String name, mimeType,newName;
 
@@ -26,9 +26,9 @@ public class UserDetailsFiles extends AuditEntity {
     @Lob
     private byte[] pic;
     @ManyToOne
-    private UserDetails userDetails;
+    private UserProfile userProfile;
 
-    public UserDetailsFiles(String name, String mimeType, byte[] pic, String newName, String newId) {
+    public UserProfileFiles(String name, String mimeType, byte[] pic, String newName, String newId) {
         this.name = name;
         this.mimeType = mimeType;
         this.pic = pic;

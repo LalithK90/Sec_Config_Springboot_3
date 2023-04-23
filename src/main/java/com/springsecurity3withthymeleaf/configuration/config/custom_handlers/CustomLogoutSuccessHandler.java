@@ -1,4 +1,4 @@
-package com.springsecurity3withthymeleaf.configuration.custom_handlers;
+package com.springsecurity3withthymeleaf.configuration.config.custom_handlers;
 
 
 import com.springsecurity3withthymeleaf.configuration.log_in_out_history.entity.LogInOutHistory;

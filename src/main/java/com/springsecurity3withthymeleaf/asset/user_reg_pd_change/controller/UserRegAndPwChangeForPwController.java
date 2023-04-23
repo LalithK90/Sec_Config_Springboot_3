@@ -7,8 +7,8 @@ import com.springsecurity3withthymeleaf.asset.role.entity.Role;
 import com.springsecurity3withthymeleaf.asset.role.service.RoleService;
 import com.springsecurity3withthymeleaf.asset.user.entity.User;
 import com.springsecurity3withthymeleaf.asset.user.service.UserService;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
-import com.springsecurity3withthymeleaf.asset.user_details.service.UsersDetailsService;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfile;
+import com.springsecurity3withthymeleaf.asset.user_profile.service.UserProfileService;
 import com.springsecurity3withthymeleaf.asset.user_reg_pd_change.entity.UserRegAndPwChangeForPw;
 import com.springsecurity3withthymeleaf.asset.user_reg_pd_change.entity.enums.TokenStatus;
 import com.springsecurity3withthymeleaf.asset.user_reg_pd_change.service.UserRegAndPwChangeForPwService;
@@ -42,7 +42,7 @@ public class UserRegAndPwChangeForPwController {
   private final RoleService roleService;
   private final DateTimeAgeService dateTimeAgeService;
   private final CommonService commonService;
-  private final UsersDetailsService userDetailsService;
+  private final UserProfileService userDetailsService;
   private final PasswordEncoder passwordEncoder;
 
   private boolean confirmationTokenIsExpired(UserRegAndPwChangeForPw userRegAndPwChangeForPw) {
@@ -177,17 +177,17 @@ public class UserRegAndPwChangeForPwController {
       user.setRoles(roles);
 
 //      need to set user details
-      UserDetails userDetails = new UserDetails();
-      userDetails.setEmail(email);
-      userDetails.setStopActive(StopActive.ACTIVE);
+      UserProfile userProfile = new UserProfile();
+      userProfile.setEmail(email);
+      userProfile.setStopActive(StopActive.ACTIVE);
 
-      user.setUserDetails(userDetailsService.persist(userDetails));
+      user.setUserProfile(userDetailsService.persist(userProfile));
       User saveUser = userService.persist(user);
 
 //    destroy confirmation token
       userRegAndPwChangeForPwService.deleteByConformationToken(userRegAndPwChangeForPw);
 //todo destroy confirmation token not working
-      return "redirect:/userDetails/edit/"+saveUser.getUserDetails().getId();
+      return "redirect:/userDetails/edit/"+saveUser.getUserProfile().getId();
     }
 
   }

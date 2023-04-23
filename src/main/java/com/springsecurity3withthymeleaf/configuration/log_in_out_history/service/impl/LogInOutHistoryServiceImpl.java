@@ -25,7 +25,7 @@ public class LogInOutHistoryServiceImpl implements LogInOutHistoryService {
   }
 
   @Cacheable
-  public LogInOutHistory findById(Integer id) {
+  public LogInOutHistory findById(Long id) {
     return logInOutHistoryDao.getReferenceById(id);
   }
 

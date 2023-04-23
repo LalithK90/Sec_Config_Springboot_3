@@ -9,14 +9,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class CustomerUserDetails implements UserDetails, Serializable {
+public class CustomerUserDetails implements UserDetails {
 
   private User user;
 

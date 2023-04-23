@@ -27,7 +27,7 @@ public class RoleController {
 
 
     @GetMapping( value = "/{id}" )
-    public String roleView(@PathVariable( "id" ) Integer id, Model model) {
+    public String roleView(@PathVariable( "id" ) Long id, Model model) {
         model.addAttribute("role", roleService.findById(id));
         model.addAttribute("addStatus", false);
         return "role/addRole";
@@ -35,7 +35,7 @@ public class RoleController {
 
 
     @GetMapping( value = "/edit/{id}" )
-    public String editRoleFrom(@PathVariable( "id" ) Integer id, Model model) {
+    public String editRoleFrom(@PathVariable( "id" ) Long id, Model model) {
         model.addAttribute("role", roleService.findById(id));
         model.addAttribute("addStatus", false);
         return "role/addRole";
@@ -74,7 +74,7 @@ public class RoleController {
     }
 
     @GetMapping( value = "/remove/{id}")
-    public String removeRole(@PathVariable( "id" ) Integer id) {
+    public String removeRole(@PathVariable( "id" ) Long id) {
         roleService.delete(id);
         return "redirect:/role";
     }

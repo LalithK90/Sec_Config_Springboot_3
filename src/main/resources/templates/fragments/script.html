@@ -1,69 +1,81 @@
-
 <!doctype html>
- <html lang="en" >
-<body>
-<div data-th-fragment="scriptFragment">
+<html lang="en" >
+<body >
+<div data-th-fragment="scriptFragment" >
 
-    <!-- jQuery library -->
-    <script data-th-src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <!-- Latest compiled JavaScript for bootstrap-->
-    <script data-th-src="@{/webjars/popper.js/1.14.3/popper.min.js}"></script>
-    <script data-th-src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
-    <!-- fontawesome js -->
-    <script data-th-src="@{/webjars/font-awesome/5.11.2/js/all.min.js}"></script>
+  <script src="/webjars/jquery/3.6.3/jquery.min.js" ></script >
 
-    <!-- Chart js-->
-    <script data-th-src="@{/webjars/chart.js/2.9.3/dist/Chart.min.js}"></script>
-    <script data-th-src="@{/webjars/chart.js/2.9.3/dist/Chart.bundle.min.js}"></script>
+  <script src="webjars/bootstrap/5.2.3/js/bootstrap.min.js" ></script >
 
-    <!--To modify the alert-->
-    <script data-th-src="@{/js/sweetalert.js}"></script>
-    <!-- data table -->
-    <script data-th-src="@{/js/pagination.js}"></script>
-    <!--custom javascript-->
-    <script data-th-src="@{/js/myJs.js}"></script>
+  <script src="/webjars/font-awesome/6.3.0/js/all.min.js" ></script >
 
-    <!--notification count get url-->
-    <!--  <script>
-          $(document).ready(function () {
-              /*
-              console.log("petition count url "+ petitionCountUrl);
-              console.log("document.URL : "+document.URL);
-              console.log("document.location.href : "+document.location.href);
-              console.log("document.location.origin : "+document.location.origin);
-              console.log("document.location.hostname : "+document.location.hostname);
-              console.log("document.location.host : "+document.location.host);
-              console.log("document.location.pathname : "+document.location.pathname);
-              */
+  <script src="/webjars/chart.js/4.2.0/dist/chart.js" ></script >
 
-              let petitionCountUrl = document.location.origin + "/petitionCount";
-              if (document.location.pathname !== "/login") {
-                  // to get petition count every five secound
-                  window.setInterval(function () {
-                      $.ajax({
-                          type: "get",
-                          dataType: 'json',
-                          contentType: 'application/json',
-                          url: petitionCountUrl,
-                          success: function (data, textStatus) {
-                              if (textStatus === 'success') {
-                                  /// call your function here
-                                  $("#petitionTodayCount").html(data);
-                              }
-                          },
-                          error: function (xhr, textStatus, errorThrown) {
-                              console.log('request failed   ' + errorThrown);
-                              location.reload();
-                          }
-                      });
+  <script src="/webjars/kurkle__color/0.3.2/dist/color.min.js" ></script >
 
-                  }, 5000);
-              }
-          });
-      </script>-->
-</div>
-</body>
-</html>
+  <script src="/js/sweetalert.js" ></script >
+
+  <script src="/js/jspdf.umd.min.js" ></script >
+
+  <script src="/js/pagination.js" ></script >
+
+  <script src="/js/myJs.js" ></script >
+
+  <!--notification count get url-->
+  <!--  <script>
+        $(document).ready(function () {
+            /*
+            console.log("petition count url "+ petitionCountUrl);
+            console.log("document.URL : "+document.URL);
+            console.log("document.location.href : "+document.location.href);
+            console.log("document.location.origin : "+document.location.origin);
+            console.log("document.location.hostname : "+document.location.hostname);
+            console.log("document.location.host : "+document.location.host);
+            console.log("document.location.pathname : "+document.location.pathname);
+            */
+
+            let petitionCountUrl = document.location.origin + "/petitionCount";
+            if (document.location.pathname !== "/login") {
+                // to get petition count every five secound
+                window.setInterval(function () {
+                    $.ajax({
+                        type: "get",
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: petitionCountUrl,
+                        success: function (data, textStatus) {
+                            if (textStatus === 'success') {
+                                /// call your function here
+                                $("#petitionTodayCount").html(data);
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log('request failed   ' + errorThrown);
+                            location.reload();
+                        }
+                    });
+
+                }, 5000);
+            }
+        });
+
+
+        // Create a new jsPDF instance
+var doc = new jsPDF();
+
+// Get HTML content
+var elementHTML = document.getElementById('myHtmlContent').innerHTML;
+
+// Add HTML content to PDF
+doc.fromHTML(elementHTML);
+
+// Save the PDF
+doc.save('myPDF.pdf');
+
+    </script>-->
+</div >
+</body >
+</html >
 
 
 

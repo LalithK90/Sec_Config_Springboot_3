@@ -4,8 +4,8 @@ package com.springsecurity3withthymeleaf.asset.user.controller;
 import com.springsecurity3withthymeleaf.asset.role.service.RoleService;
 import com.springsecurity3withthymeleaf.asset.user.entity.User;
 import com.springsecurity3withthymeleaf.asset.user.service.UserService;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
-import com.springsecurity3withthymeleaf.asset.user_details.service.UsersDetailsService;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfile;
+import com.springsecurity3withthymeleaf.asset.user_profile.service.UserProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
-    private final UsersDetailsService usersDetailsService;
+    private final UserProfileService userProfileService;
 
 
     @GetMapping
@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping( value = "/{id}" )
-    public String userView(@PathVariable( "id" ) Integer id, Model model) {
+    public String userView(@PathVariable( "id" ) Long id, Model model) {
         model.addAttribute("userDetail", userService.findById(id));
         return "user/user-detail";
     }
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping( value = "/edit/{id}" )
-    public String editUserFrom(@PathVariable( "id" ) Integer id, Model model) {
+    public String editUserFrom(@PathVariable( "id" ) Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
         model.addAttribute("addStatus", false);
         return commonCode(model);
@@ -56,15 +56,15 @@ public class UserController {
     public String userAddFrom(Model model) {
         model.addAttribute("addStatus", true);
         model.addAttribute("employeeDetailShow", false);
-        model.addAttribute("employee", new UserDetails());
+        model.addAttribute("employee", new UserProfile());
         return "user/addUser";
     }
 
     //Send a searched employee to add working place
     @PostMapping( value = "/workingPlace" )
-    public String addUserEmployeeDetails(@ModelAttribute( "userDetails" ) UserDetails userDetails, Model model) {
+    public String addUserEmployeeDetails(@ModelAttribute( "userDetails" ) UserProfile userProfile, Model model) {
 
-        List< UserDetails > userDetailList = usersDetailsService.search(userDetails)
+        List<UserProfile> userDetailList = userProfileService.search(userProfile)
             .stream()
             .filter(userService::findByEmployee).toList();
 
@@ -75,7 +75,7 @@ public class UserController {
             return commonCode(model);
         }
         model.addAttribute("addStatus", true);
-        model.addAttribute("userDetailses", new UserDetails());
+        model.addAttribute("userDetailses", new UserProfile());
         model.addAttribute("employeeDetailShow", false);
         model.addAttribute("employeeNotFoundShow", true);
         model.addAttribute("employeeNotFound", "There is not employee in the system according to the provided details" +
@@ -91,7 +91,7 @@ public class UserController {
     @PostMapping( value = {"/add", "/update"} )
     public String addUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
 
-        if ( userService.findUserByEmployee(user.getUserDetails()) != null ) {
+        if ( userService.findUserByEmployee(user.getUserProfile()) != null ) {
             ObjectError error = new ObjectError("userDetails", "This user already defined as a user");
             result.addError(error);
         }
@@ -105,7 +105,7 @@ public class UserController {
             //todo need to change
             dbUser.setEnabled(true);
             dbUser.setPassword(user.getPassword());
-            dbUser.setUserDetails(user.getUserDetails());
+            dbUser.setUserProfile(user.getUserProfile());
             dbUser.setRoles(user.getRoles());
             userService.persist(dbUser);
             return "redirect:/user";
@@ -119,7 +119,7 @@ public class UserController {
 
 
     @GetMapping( value = "/remove/{id}" )
-    public String removeUser(@PathVariable Integer id) {
+    public String removeUser(@PathVariable Long id) {
     //     user can not be deleted but status was set to blocks
         userService.delete(id);
         return "redirect:/user";

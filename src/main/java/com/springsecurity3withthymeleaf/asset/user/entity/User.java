@@ -3,7 +3,8 @@ package com.springsecurity3withthymeleaf.asset.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.springsecurity3withthymeleaf.asset.role.entity.Role;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
+import com.springsecurity3withthymeleaf.asset.user.entity.enums.AProvider;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfile;
 import com.springsecurity3withthymeleaf.util.audit.AuditEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -33,19 +34,23 @@ public class User extends AuditEntity {
     @Size(min = 4, message = "Password should include four characters or symbols")
     private String password;
 
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private AProvider aProvider;
+
     @Column(nullable = false)
     private boolean enabled;
 
     @OneToOne
-    private UserDetails userDetails;
-
+    private UserProfile userProfile;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch( FetchMode.SUBSELECT)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List< Role > roles;
+    private List<Role> roles;
 
 
 }

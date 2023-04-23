@@ -5,8 +5,8 @@
          dynamicConfig="true">
 
     <diskStore path="java.io.tmpdir"/>
-    <!--1. userDetails-->
-    <cache name="userDetails"
+    <!--1. userProfile-->
+    <cache name="userProfile"
            maxEntriesLocalHeap="1000"
            maxEntriesLocalDisk="1000"
            eternal="false"

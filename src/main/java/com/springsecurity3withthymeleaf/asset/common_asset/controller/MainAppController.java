@@ -7,9 +7,9 @@ import com.springsecurity3withthymeleaf.asset.role.entity.Role;
 import com.springsecurity3withthymeleaf.asset.role.service.RoleService;
 import com.springsecurity3withthymeleaf.asset.user.entity.User;
 import com.springsecurity3withthymeleaf.asset.user.service.UserService;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
-import com.springsecurity3withthymeleaf.asset.user_details.service.UserDetailsFilesService;
-import com.springsecurity3withthymeleaf.asset.user_details.service.UsersDetailsService;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfile;
+import com.springsecurity3withthymeleaf.asset.user_profile.service.UserProfileFilesService;
+import com.springsecurity3withthymeleaf.asset.user_profile.service.UserProfileService;
 import com.springsecurity3withthymeleaf.util.service.CommonService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,9 +30,9 @@ import java.util.stream.Collectors;
 @Log
 public class MainAppController {
   private final UserService userService;
-  private final UserDetailsFilesService userDetailsFilesService;
+  private final UserProfileFilesService userProfileFilesService;
   private final RoleService roleService;
-  private final UsersDetailsService usersDetailsService;
+  private final UserProfileService userProfileService;
   private final CommonService commonService;
   private final ResourceLoader resourceLoader;
 
@@ -68,9 +68,9 @@ public class MainAppController {
 
   @GetMapping( value = "/profile" )
   public String userProfile(Model model, Principal principal) {
-    UserDetails userDetails = userService.findByUserName(principal.getName()).getUserDetails();
-    model.addAttribute("userDetail", userDetails);
-    model.addAttribute("file", userDetailsFilesService.userDetailsFileDownloadLinks(userDetails));
+    UserProfile userProfile = userService.findByUserName(principal.getName()).getUserProfile();
+    model.addAttribute("userDetail", userProfile);
+    model.addAttribute("file", userProfileFilesService.userDetailsFileDownloadLinks(userProfile));
     return "userDetails/userDetails-detail";
   }
 
@@ -88,21 +88,21 @@ public class MainAppController {
     }
 
 //Employee
-    UserDetails userDetails = new UserDetails();
-    userDetails.setNumber("LKCC" + commonService.numberAutoGen(null).toString());
-    userDetails.setName("Admin User");
-    userDetails.setCallingName("Admin");
-    userDetails.setName("908670000V");
-    userDetails.setMobileOne("0750000000");
-    userDetails.setTitle(Title.DR);
-    userDetails.setGender(Gender.MALE);
-    userDetails.setDateOfBirth(LocalDate.now().minusYears(18));
-    UserDetails userDetailsDb = usersDetailsService.persist(userDetails);
+    UserProfile userProfile = new UserProfile();
+    userProfile.setNumber("LKCC" + commonService.numberAutoGen(null).toString());
+    userProfile.setName("Admin User");
+    userProfile.setCallingName("Admin");
+    userProfile.setName("908670000V");
+    userProfile.setMobileOne("0750000000");
+    userProfile.setTitle(Title.DR);
+    userProfile.setGender(Gender.MALE);
+    userProfile.setDateOfBirth(LocalDate.now().minusYears(18));
+    UserProfile userProfileDb = userProfileService.persist(userProfile);
 
 
     //admin user one
     User user = new User();
-    user.setUserDetails(userDetailsDb);
+    user.setUserProfile(userProfileDb);
     user.setUsername("admin@gmail.com");
     user.setPassword("admin");
     String message = "Username:- " + user.getUsername() + "\n Password:- " + user.getPassword();

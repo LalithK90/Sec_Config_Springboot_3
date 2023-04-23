@@ -2,27 +2,30 @@ package com.springsecurity3withthymeleaf.asset.user.service;
 
 
 import com.springsecurity3withthymeleaf.asset.user.entity.User;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfile;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     List< User > findAll();
 
-    User findById(Integer id);
+    User findById(Long id);
 
     User persist(User user);
 
-    boolean delete(Integer id);
+    boolean delete(Long id);
 
     List<User> search(User user);
 
-    Integer findByUserIdByUserName(String userName);
+    Long findByUserIdByUserName(String userName);
 
     User findByUserName(String name);
 
-    User findUserByEmployee(UserDetails userDetails);
+    User findUserByEmployee(UserProfile userProfile);
 
-    boolean findByEmployee(UserDetails userDetails);
+    boolean findByEmployee(UserProfile userProfile);
+
+    boolean existsUsername(String username);
 }

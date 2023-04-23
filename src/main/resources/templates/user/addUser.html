@@ -32,7 +32,7 @@
 <!--Employee find-->
 <div class="container-fluid" id="employeeFindForm" data-th-if="${employeeDetailShow==false}">
     <div class="col-sm-12 flex-column ">
-        <form id="form" method="POST" data-th-action="${'/user/workingPlace'}" data-th-object="${userDetails}"
+        <form data-th-action="${'/user/workingPlace'}" data-th-object="${userProfile}" id="form" method="POST"
               enctype="multipart/form-data">
             <div class="form-row">
                 <div class="col-5 flex-column">
@@ -101,23 +101,23 @@
                 <!--Employee details Display-->
                 <div class="form-row">
                     <div class="col-md-4">
-                        <label class="control-label" for="userDetails">Employee :</label>
+                        <label class="control-label" for="userProfile">Employee :</label>
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" data-th-field="*{userDetails}" data-th-each="e : ${userDetailses}"
-                                name="userDetails"
-                                id="userDetails" required>
+                        <select class="form-control" data-th-each="e : ${userDetailses}" data-th-field="*{userProfile}"
+                                id="userProfile"
+                                name="userProfile" required>
                             <option id="employeeList"
                                     data-th-text="${e.title.title} + ${' '} + ${e.name} +${' - '} + ${e.nic}"
                                     data-th-value="${e.id}"
-                                    data-th-field="*{userDetails}" value="">Please select
+                                    data-th-field="*{userProfile}" value="">Please select
                             </option>
                         </select>
                         <div id="employeeNameBox" data-th-if="${addStatus==false}">
                             <strong>
                                 <span id="employeeName"
-                                      data-th-text="${user.userDetails.title.title} + ${' '} + ${user.userDetails.name} +${' - '} + ${user.userDetails.nic}"></span>
-                                <input type="hidden" id="employeeSelected" data-th-field="*{userDetails}">
+                                      data-th-text="${user.userProfile.title.title} + ${' '} + ${user.userProfile.name} +${' - '} + ${user.userProfile.nic}"></span>
+                                <input data-th-field="*{userProfile}" id="employeeSelected" type="hidden">
                             </strong>
                         </div>
                     </div>

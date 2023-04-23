@@ -1,4 +1,4 @@
-package com.springsecurity3withthymeleaf.asset.user_details.entity;
+package com.springsecurity3withthymeleaf.asset.user_profile.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
@@ -23,8 +23,8 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter( "UserDetails" )
-public class UserDetails extends AuditEntity {
+@JsonFilter( "UserProfile" )
+public class UserProfile extends AuditEntity {
 
   @Size( min = 5, message = "Your name cannot be accepted" )
   private String name;
@@ -66,6 +66,7 @@ public class UserDetails extends AuditEntity {
 
   @DateTimeFormat( pattern = "yyyy-MM-dd" )
   private LocalDate dateOfBirth;
+
 
   @Transient
   private MultipartFile file;

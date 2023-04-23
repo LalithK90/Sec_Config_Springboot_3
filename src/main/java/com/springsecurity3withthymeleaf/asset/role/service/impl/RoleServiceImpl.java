@@ -24,8 +24,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Cacheable
-    public Role findById(Integer id) {
-        return roleDao.getOne(id);
+    public Role findById(Long id) {
+        return roleDao.getReferenceById(id);
     }
 
 
@@ -37,7 +37,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @CacheEvict( allEntries = true )
-    public boolean delete(Integer id) {
+    public boolean delete(Long id) {
         roleDao.deleteById(id);
         return true;
     }

@@ -21,7 +21,7 @@ public class SuccessLogInAspect {
 
   private final FailureAttemptService failureAttemptService;
 
-  @AfterReturning( value = "execution( * com.springsecurity3withthymeleaf.configuration.custom_handlers" +
+  @AfterReturning( value = "execution( * com.springsecurity3withthymeleaf.configuration.config.custom_handlers" +
       ".CustomAuthenticationSuccessHandler.onAuthenticationSuccess(..))" )
   public void onAuthenticationSuccess(JoinPoint joinPoint) {
 

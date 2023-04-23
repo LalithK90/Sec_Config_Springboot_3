@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface RoleService {
     List< Role > findAll();
-    Role findById(Integer id);
+    Role findById(Long id);
     Role persist(Role role);
-    boolean delete(Integer id);
+    boolean delete(Long id);
     List< Role > search(Role role);
     Role findByRoleName(String roleName);
 

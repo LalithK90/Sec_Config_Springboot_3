@@ -24,7 +24,7 @@ public abstract class AuditEntity {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    private Integer id;
+    private Long id;
 
     @CreatedBy
     @Basic( optional = false )

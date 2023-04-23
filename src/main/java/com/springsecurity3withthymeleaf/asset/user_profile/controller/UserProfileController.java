@@ -1,12 +1,12 @@
-package com.springsecurity3withthymeleaf.asset.user_details.controller;
+package com.springsecurity3withthymeleaf.asset.user_profile.controller;
 
 
 import com.springsecurity3withthymeleaf.asset.common_asset.model.enums.Gender;
 import com.springsecurity3withthymeleaf.asset.common_asset.model.enums.Title;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetails;
-import com.springsecurity3withthymeleaf.asset.user_details.entity.UserDetailsFiles;
-import com.springsecurity3withthymeleaf.asset.user_details.service.UserDetailsFilesService;
-import com.springsecurity3withthymeleaf.asset.user_details.service.UsersDetailsService;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfile;
+import com.springsecurity3withthymeleaf.asset.user_profile.entity.UserProfileFiles;
+import com.springsecurity3withthymeleaf.asset.user_profile.service.UserProfileFilesService;
+import com.springsecurity3withthymeleaf.asset.user_profile.service.UserProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -23,9 +23,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/userDetails")
 @RequiredArgsConstructor
-public class UserDetailsController {
-    private final UsersDetailsService usersDetailsService;
-    private final UserDetailsFilesService userDetailsFilesService;
+public class UserProfileController {
+    private final UserProfileService userProfileService;
+    private final UserProfileFilesService userProfileFilesService;
 
     // Common things for an userDetails add and update
     private String commonThings(Model model) {
@@ -37,7 +37,7 @@ public class UserDetailsController {
     //When scr called file will send to
     @GetMapping("/file/{filename}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("filename") String filename) {
-        UserDetailsFiles file = userDetailsFilesService.findByNewID(filename);
+        UserProfileFiles file = userProfileFilesService.findByNewID(filename);
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
@@ -47,27 +47,27 @@ public class UserDetailsController {
     //Send all userDetails data
     @RequestMapping
     public String findAll(Model model) {
-        model.addAttribute("userDetailses", usersDetailsService.findAll());
+        model.addAttribute("userDetailses", userProfileService.findAll());
         model.addAttribute("contendHeader", "User Details Registration");
         return "userDetails/userDetails";
     }
 
     //Send on userDetails details
     @GetMapping(value = "/{id}")
-    public String view(@PathVariable("id") Integer id, Model model) {
-        UserDetails userDetails = usersDetailsService.findById(id);
-        model.addAttribute("userDetail", userDetails);
-        model.addAttribute("file", userDetailsFilesService.userDetailsFileDownloadLinks(userDetails));
+    public String view(@PathVariable("id") Long id, Model model) {
+        UserProfile userProfile = userProfileService.findById(id);
+        model.addAttribute("userDetail", userProfile);
+        model.addAttribute("file", userProfileFilesService.userDetailsFileDownloadLinks(userProfile));
         return "userDetails/userDetails-detail";
     }
 
     //Send userDetails data edit
     @GetMapping(value = "/edit/{id}")
-    public String editForm(@PathVariable("id") Integer id, Model model) {
-        UserDetails userDetails = usersDetailsService.findById(id);
-        model.addAttribute("userDetails", userDetails);
+    public String editForm(@PathVariable("id") Long id, Model model) {
+        UserProfile userProfile = userProfileService.findById(id);
+        model.addAttribute("userDetails", userProfile);
         model.addAttribute("addStatus", false);
-        model.addAttribute("file", userDetailsFilesService.userDetailsFileDownloadLinks(userDetails));
+        model.addAttribute("file", userProfileFilesService.userDetailsFileDownloadLinks(userProfile));
         return commonThings(model);
     }
 
@@ -75,40 +75,40 @@ public class UserDetailsController {
     @GetMapping(value = {"/add"})
     public String addForm(Model model) {
         model.addAttribute("addStatus", true);
-        model.addAttribute("userDetails", new UserDetails());
+        model.addAttribute("userDetails", new UserProfile());
         return commonThings(model);
     }
 
     //Employee add and update
     @PostMapping(value = {"/save", "/update"})
-    public String add(@Valid @ModelAttribute UserDetails userDetails, BindingResult result, Model model
+    public String add(@Valid @ModelAttribute UserProfile userProfile, BindingResult result, Model model
     ) {
         if (result.hasErrors()) {
             model.addAttribute("addStatus", true);
-            model.addAttribute("userDetails", userDetails);
+            model.addAttribute("userDetails", userProfile);
             return commonThings(model);
         }
         //after save userDetails files and save userDetails
-        UserDetails userDetailsDb = usersDetailsService.persist(userDetails);
+        UserProfile userProfileDb = userProfileService.persist(userProfile);
 
         try {
             //save userDetails images file
-            if (userDetails.getFile() != null) {
-                UserDetailsFiles userDetailsFiles =
-                        userDetailsFilesService.findByUserDetails(userDetailsDb);
-                if (userDetailsFiles != null) {
+            if (userProfile.getFile() != null) {
+                UserProfileFiles userProfileFiles =
+                        userProfileFilesService.findByUserDetails(userProfileDb);
+                if (userProfileFiles != null) {
                     // update new contents
-                    userDetailsFiles.setPic(userDetails.getFile().getBytes());
+                    userProfileFiles.setPic(userProfile.getFile().getBytes());
                     // Save all to database
                 } else {
-                    userDetailsFiles = new UserDetailsFiles(userDetails.getFile().getOriginalFilename(),
-                                                            userDetails.getFile().getContentType(),
-                                                            userDetails.getFile().getBytes(),
-                                                            userDetails.getNic().concat("-" + LocalDateTime.now()),
+                    userProfileFiles = new UserProfileFiles(userProfile.getFile().getOriginalFilename(),
+                                                            userProfile.getFile().getContentType(),
+                                                            userProfile.getFile().getBytes(),
+                                                            userProfile.getNic().concat("-" + LocalDateTime.now()),
                                                             UUID.randomUUID().toString().concat("userDetails"));
-                    userDetailsFiles.setUserDetails(userDetails);
+                    userProfileFiles.setUserProfile(userProfile);
                 }
-                userDetailsFilesService.persist(userDetailsFiles);
+                userProfileFilesService.persist(userProfileFiles);
             }
             return "redirect:/userDetails";
 
@@ -118,21 +118,21 @@ public class UserDetailsController {
                             "System message -->" + e);
             result.addError(error);
             model.addAttribute("addStatus", true);
-            model.addAttribute("userDetails", userDetails);
+            model.addAttribute("userDetails", userProfile);
             return commonThings(model);
         }
     }
 
     @GetMapping(value = "/remove/{id}")
-    public String remove(@PathVariable Integer id) {
-        usersDetailsService.delete(id);
+    public String remove(@PathVariable Long id) {
+        userProfileService.delete(id);
         return "redirect:/userDetails";
     }
 
     //To search userDetails any giving userDetails parameter
     @GetMapping(value = "/search")
-    public String search(Model model, UserDetails userDetails) {
-        model.addAttribute("userDetails", usersDetailsService.search(userDetails));
+    public String search(Model model, UserProfile userProfile) {
+        model.addAttribute("userDetails", userProfileService.search(userProfile));
         return "userDetails/userDetails-detail";
     }
 
